@@ -5,4 +5,19 @@ def home(request):
 	return render(request, 'home.html')
 
 def count(request):
-	return render(request, 'count.html')
+	fulltext = request.GET['fulltext']
+
+	wordlist = fulltext.split()
+
+	worddictionary = {}
+
+	for word in wordlist:
+		if word in worddictionary:
+			# Increase
+			worddictionary[word] += 1
+		else:
+			# Add to dictionary
+			worddictionary[word] = 1
+
+
+	return render(request, 'count.html',{'fulltext':fulltext, 'count':len(wordlist), 'worddictionary':worddictionary.items})
